@@ -22,6 +22,14 @@ Sistema interativo que aplica **4 Algoritmos Clássicos de Divisão e Conquista*
 
 ---
 
+## 📸 Screenshots
+
+| Radar de Drones & Detecção de Colisão em Tempo Real |
+|:---:|
+| ![Interface Principal](imagens/interface_home.png) |
+
+---
+
 ## 🎥 Vídeo de Apresentação
 
 O vídeo de apresentação e demonstração do projeto pode ser assistido no YouTube:
