@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divisão e Conquista — Didático & Prático</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --amber: #d29922;
+    --purple: #bc8cff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "Inter", -apple-system, sans-serif;
+    line-height: 1.6;
+    padding-bottom: 70px;
+  }
+
+  /* HEADER */
+  header {
+    background: #161b22;
+    border-bottom: 1px solid var(--card-border);
+    padding: 24px 32px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  header p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  /* TABS */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    background: #0d1117;
+    padding: 16px 20px 0;
+    border-bottom: 1px solid var(--card-border);
+    overflow-x: auto;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    border-radius: 6px 6px 0 0;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-btn:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .nav-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--card);
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 980px;
+    margin: 28px auto 0;
+    padding: 0 20px;
+  }
+
+  .tab-panel {
+    display: none;
+  }
+
+  .tab-panel.active {
+    display: block;
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-header-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* BOXES DE EXPLICAÇÃO */
+  .how-it-works-box {
+    background: rgba(88, 166, 255, 0.06);
+    border: 1px solid rgba(88, 166, 255, 0.25);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .how-it-works-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .step-item {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .step-label {
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .badge-divide { color: #58a6ff; }
+  .badge-conquer { color: #bc8cff; }
+  .badge-combine { color: #3fb950; }
+
+  /* BOTÕES */
+  .btn {
+    background: var(--accent);
+    color: #0d1117;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--card-border);
+  }
+
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--text-muted);
+  }
+
+  .btn-red {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  /* RESULTADOS */
+  .result-banner {
+    background: #0d1117;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .result-banner.alert {
+    border-color: rgba(248, 81, 73, 0.5);
+    background: rgba(248, 81, 73, 0.08);
+  }
+
+  .result-banner.success {
+    border-color: rgba(63, 185, 80, 0.5);
+    background: rgba(63, 185, 80, 0.08);
+  }
+
+  .result-value {
+    font-size: 26px;
+    font-weight: 800;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .result-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* RADAR */
+  .radar-container {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    margin: 0 auto 16px;
+    background: radial-gradient(circle, #131c2d 0%, #090e17 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    position: relative;
+    cursor: crosshair;
+  }
+
+  #radar-cv {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* LISTA DE FILMES */
+  .movie-item {
+    background: #0d1117;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .movie-item:hover {
+    border-color: var(--accent);
+  }
+
+  .movie-pos {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 12px;
+    color: var(--text-muted);
+  }
+
+  .arrow-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 6px;
+  }
+
+  .arrow-btn:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .bar-container {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    height: 12px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: var(--purple);
+    transition: width 0.3s;
+  }
+
+  /* HISTOGRAMA */
+  .chart-box {
+    width: 100%;
+    height: 220px;
+    background: #0d1117;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 14px 0;
+  }
+
+  #hist-cv {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* TEXTAREAS */
+  textarea {
+    background: #0d1117;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    padding: 10px 14px;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: "JetBrains Mono", monospace;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ Algoritmos de Divisão e Conquista na Prática</h1>
+  <p>Projeto de Algoritmos (PA 2026.2) — Veja visualmente como cada algoritmo divide, conquista e combina a solução.</p>
+</header>
+
+<!-- MENU DE ABAS -->
+<nav class="nav-tabs">
+  <button id="tab-btn-1" class="nav-btn active" onclick="showTab(1)">
+    <span>🛰️ 1. Drones & Colisão</span>
+    <span class="badge" style="background: rgba(88,166,255,0.15); color: var(--accent);">Par Mais Próximo O(n log n)</span>
+  </button>
+  <button id="tab-btn-2" class="nav-btn" onclick="showTab(2)">
+    <span>🎬 2. Afinidade de Gostos</span>
+    <span class="badge" style="background: rgba(188,140,255,0.15); color: var(--purple);">Contagem de Inversões O(n log n)</span>
+  </button>
+  <button id="tab-btn-3" class="nav-btn" onclick="showTab(3)">
+    <span>💳 3. Latência de Pagamentos</span>
+    <span class="badge" style="background: rgba(63,185,80,0.15); color: var(--green);">Mediana das Medianas O(n)</span>
+  </button>
+  <button id="tab-btn-4" class="nav-btn" onclick="showTab(4)">
+    <span>🔐 4. Chaves Gigantes</span>
+    <span class="badge" style="background: rgba(210,153,34,0.15); color: var(--amber);">Karatsuba O(n^1.585)</span>
+  </button>
+</nav>
+
+<main class="container">
+
+  <!-- ============================================================ -->
+  <!-- ABA 1: PAR MAIS PRÓXIMO (DRONES) -->
+  <!-- ============================================================ -->
+  <section id="panel-1" class="tab-panel active">
+    <div class="card">
+      <div class="card-header-title">
+        <span>🛰️ Simulação: Detecção de Colisão em Radar Aéreo</span>
+        <span class="badge" style="background: rgba(88,166,255,0.15); color: var(--accent);">Closest Pair of Points</span>
+      </div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+        Clique nos botões para espalhar drones no mapa ou clique diretamente no radar para adicionar um drone onde quiser.
+      </p>
+
+      <div class="btn-group">
+        <button class="btn" onclick="generateDrones(20)">✈️ Gerar 20 Drones Aleatórios</button>
+        <button class="btn btn-outline" onclick="generateDrones(50)">✈️ Gerar 50 Drones (Mais Denso)</button>
+        <button class="btn btn-outline" onclick="clearDrones()">🧹 Limpar Mapa</button>
+      </div>
+
+      <!-- RADAR CANVAS -->
+      <div class="radar-container" onclick="clickOnRadar(event)">
+        <canvas id="radar-cv" width="500" height="500"></canvas>
+      </div>
+
+      <!-- LEGENDA VISUAL DO RADAR -->
+      <div style="display: flex; gap: 16px; justify-content: center; font-size: 12px; margin-bottom: 8px; flex-wrap: wrap;">
+        <span style="color: #58a6ff;">● Drones</span>
+        <span style="color: #fff;">┆ <strong>Linha Branca:</strong> Corte Central da Divisão</span>
+        <span style="color: rgba(88,166,255,0.8);">▒ <strong>Faixa Sombreada:</strong> Faixa de largura 2d</span>
+        <span style="color: var(--red);">━ <strong>Linha Colorida:</strong> Menor Distância Encontrada</span>
+      </div>
+
+      <!-- RESULTADO -->
+      <div id="radar-result" class="result-banner">
+        <div>
+          <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Menor Distância Detectada</div>
+          <div class="result-value" id="radar-dist" style="color: var(--accent);">-- km</div>
+          <div class="result-desc" id="radar-details">Gere ou adicione drones para calcular.</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 12px; color: var(--text-muted);">Tempo de Execução</div>
+          <div style="font-size: 18px; font-weight: 700; font-family: monospace;" id="radar-time">-- ms</div>
+          <div style="font-size: 11px; color: var(--green);">Garantia O(n log n)</div>
+        </div>
+      </div>
+
+      <!-- EXPLICAÇÃO DETALHADA DO ALGORITMO -->
+      <div class="how-it-works-box">
+        <div class="how-it-works-title">
+          <span>🔍 Como o algoritmo de Divisão e Conquista funciona por dentro?</span>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-label badge-divide">1. DIVISÃO (Divide):</div>
+            <div>
+              O algoritmo ordena todos os drones pela coordenada <strong>X</strong> (horizontal) e passa uma <strong>linha vertical exatamente no meio</strong> (veja a linha tracejada no radar). O espaço aéreo fica dividido em duas metades: <em>Esquerda</em> e <em>Direita</em>.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-conquer">2. CONQUISTA (Recursão):</div>
+            <div>
+              Ele chama a si mesmo recursivamente para achar a menor distância na metade esquerda e na metade direita. Seja <strong>d</strong> a menor distância encontrada até esse momento.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-combine">3. COMBINAÇÃO (O Truque de Mestre):</div>
+            <div>
+              E se o par mais próximo tiver um drone na esquerda e o outro na direita? Eles só podem estar a uma distância máxima <strong>d</strong> da linha do meio (criando a <strong>faixa sombreada de largura 2d</strong>).
+              Dentro dessa faixa, ordenamos por Y. O teorema matemático prova que <strong>cada ponto só precisa ser comparado com no máximo 7 vizinhos</strong> logo acima dele! Isso evita o O(n²) e garante o tempo ultrarrápido de <strong>O(n log n)</strong>!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ABA 2: CONTAGEM DE INVERSÕES (RECOMENDADOR) -->
+  <!-- ============================================================ -->
+  <section id="panel-2" class="tab-panel">
+    <div class="card">
+      <div class="card-header-title">
+        <span>🎬 Recomendador: Medindo Afinidade de Gostos</span>
+        <span class="badge" style="background: rgba(188,140,255,0.15); color: var(--purple);">Count Inversions via Merge Sort</span>
+      </div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+        Abaixo estão 6 filmes. Use as setas <strong>▲</strong> e <strong>▼</strong> para colocar os seus favoritos no topo e veja como o Merge Sort conta as inversões:
+      </p>
+
+      <div class="btn-group">
+        <button class="btn" onclick="calcMovieAffinity()">⚡ Calcular Compatibilidade</button>
+        <button class="btn btn-outline" onclick="presetMovies('sync')">✨ Deixar 100% Igual ao Crítico</button>
+        <button class="btn btn-outline" onclick="presetMovies('invert')">🔄 Inverter Tudo (Pior Caso - 0% Afinidade)</button>
+      </div>
+
+      <div id="movies-list" style="margin-top: 16px;"></div>
+
+      <div class="result-banner" id="match-result-banner">
+        <div style="flex: 1;">
+          <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Grau de Afinidade com a Crítica</div>
+          <div class="result-value" id="match-pct" style="color: var(--purple);">--%</div>
+          <div class="result-desc" id="match-verdict">Clique em "Calcular Compatibilidade"</div>
+          <div class="bar-container">
+            <div id="match-bar" class="bar-fill" style="width: 0%; background: var(--purple);"></div>
+          </div>
+        </div>
+        <div style="text-align: right; padding-left: 20px;">
+          <div style="font-size: 12px; color: var(--text-muted);">Inversões Encontradas</div>
+          <div style="font-size: 24px; font-weight: 700; font-family: monospace;" id="match-inv">--</div>
+          <div style="font-size: 11px; color: var(--text-muted);">de 15 inversões possíveis</div>
+        </div>
+      </div>
+
+      <!-- LISTA DE PARES INVERTIDOS -->
+      <div id="conflicts-container" style="margin-top: 16px; display: none;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">
+          CONFLITOS ESPECÍFICOS IDENTIFICADOS (ONDE VOCÊ DISCORDA DO CRÍTICO):
+        </div>
+        <div id="conflicts-list" style="font-family: monospace; font-size: 12px; background: #0d1117; padding: 12px; border-radius: 6px; border: 1px solid var(--card-border);"></div>
+      </div>
+
+      <!-- EXPLICAÇÃO DETALHADA DO ALGORITMO -->
+      <div class="how-it-works-box">
+        <div class="how-it-works-title">
+          <span>🔍 Como o algoritmo conta inversões em O(n log n)?</span>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-label badge-divide">1. DIVISÃO:</div>
+            <div>
+              Uma <em>inversão</em> ocorre quando você prefere o Filme A antes do Filme B, mas a outra pessoa prefere o contrário. O algoritmo pega a lista de preferências e a quebra sucessivamente ao meio até chegar em listas de 1 elemento.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-conquer">2. CONQUISTA:</div>
+            <div>
+              Conta recursivamente quantas inversões existem apenas na metade esquerda e apenas na metade direita.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-combine">3. COMBINAÇÃO (A Intercalação Inteligente):</div>
+            <div>
+              Aqui está a mágica: durante a etapa de mesclar (merge) as duas metades ordenadas, se pegamos um elemento da metade direita porque ele é menor que o elemento atual da esquerda, significa que ele é menor que <strong>TODOS os elementos que sobraram na metade esquerda</strong>!
+              <br>Em vez de somar 1 por 1, somamos <code>(tamanho_esquerda - i)</code> inversões em apenas <strong>1 passo (tempo O(1))</strong>!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ABA 3: MEDIANA DAS MEDIANAS (LATÊNCIA FINTECH) -->
+  <!-- ============================================================ -->
+  <section id="panel-3" class="tab-panel">
+    <div class="card">
+      <div class="card-header-title">
+        <span>💳 Fintech: Monitor de Latência de Pagamentos PIX & Cartão</span>
+        <span class="badge" style="background: rgba(63,185,80,0.15); color: var(--green);">Median of Medians O(n)</span>
+      </div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+        Veja a diferença entre a <strong>Média Comum</strong> (que é facilmente enganada por poucos erros) e a <strong>Mediana Real</strong> (que reflete fielmente a experiência da maioria):
+      </p>
+
+      <div class="btn-group">
+        <button class="btn" onclick="simulateLatency(false)">📊 Simular Tráfego Normal</button>
+        <button class="btn btn-red" onclick="simulateLatency(true)">🚨 Injetar Picos de Falha (Ataque/Lentidão)</button>
+      </div>
+
+      <div class="chart-box">
+        <canvas id="hist-cv"></canvas>
+      </div>
+
+      <div style="display: flex; gap: 20px; justify-content: center; font-size: 13px; margin-bottom: 14px; flex-wrap: wrap;">
+        <span style="color: #58a6ff;">● <strong>Linha Azul (Mediana O(n)):</strong> Tempo típico da maioria dos clientes</span>
+        <span style="color: #f85149;">● <strong>Linha Vermelha (Média):</strong> Puxada para cima pelos outliers</span>
+      </div>
+
+      <div class="result-banner">
+        <div>
+          <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Mediana Real das Transações</div>
+          <div class="result-value" id="sla-median" style="color: var(--accent);">-- ms</div>
+          <div class="result-desc" id="sla-desc">Tempo típico de pagamento sem distorção.</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Média Aritmética Inflada</div>
+          <div class="result-value" id="sla-mean" style="color: var(--red);">-- ms</div>
+          <div class="result-desc" id="sla-skew">Distorção causada por picos: -- ms</div>
+        </div>
+      </div>
+
+      <!-- EXPLICAÇÃO DETALHADA DO ALGORITMO -->
+      <div class="how-it-works-box">
+        <div class="how-it-works-title">
+          <span>🔍 Por que a Mediana das Medianas garante O(n) sem pior caso?</span>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-label badge-divide">1. DIVISÃO EM GRUPOS DE 5:</div>
+            <div>
+              Para achar o elemento do meio (mediana) sem precisar ordenar a lista toda (o que custaria O(n log n)), o algoritmo divide a lista inteira em blocos de exatamente <strong>5 elementos</strong>.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-conquer">2. ACHA A MEDIANA DE CADA BLOCO:</div>
+            <div>
+              Como cada bloco tem apenas 5 números, achar a mediana de cada grupinho leva tempo constante <strong>O(1)</strong>. Todas essas medianas são reunidas.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-combine">3. O PIVÔ PERFEITO (Garantia Matemática):</div>
+            <div>
+              O algoritmo chama a si mesmo para achar a <strong>mediana dessas medianas</strong>. Esse número é usado como o <strong>Pivô</strong> de partição.
+              <br>A matemática prova que esse pivô é tão equilibrado que descarta com certeza absoluta pelo menos <strong>30% da lista</strong> a cada iteração. Isso impede o algoritmo de cair no pior caso quadrático <strong>O(n²)</strong> do QuickSelect comum!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ABA 4: KARATSUBA (CRIPTOGRAFIA) -->
+  <!-- ============================================================ -->
+  <section id="panel-4" class="tab-panel">
+    <div class="card">
+      <div class="card-header-title">
+        <span>🔐 Criptografia: Multiplicação Ultrarrápida de Chaves Gigantes</span>
+        <span class="badge" style="background: rgba(210,153,34,0.15); color: var(--amber);">Karatsuba Algorithm O(n^1.585)</span>
+      </div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+        Em sistemas de segurança bancária (chaves RSA com centenas de dígitos), a multiplicação tradicional da escola faria milhões de operações desnecessárias. Veja Karatsuba em ação:
+      </p>
+
+      <div class="btn-group">
+        <button class="btn" onclick="generateAndMultiply(64)">⚡ Multiplicar Números de 64 Dígitos</button>
+        <button class="btn btn-outline" onclick="generateAndMultiply(128)">⚡ Números de 128 Dígitos</button>
+      </div>
+
+      <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">NÚMERO X (GIGANTE):</div>
+      <textarea id="kar-x" rows="2" readonly placeholder="Clique no botão acima para gerar"></textarea>
+
+      <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">NÚMERO Y (GIGANTE):</div>
+      <textarea id="kar-y" rows="2" readonly placeholder="Clique no botão acima para gerar"></textarea>
+
+      <div class="result-banner success">
+        <div>
+          <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Economia de Esforço Computacional</div>
+          <div class="result-value" id="kar-savings" style="color: var(--green);">--%</div>
+          <div class="result-desc" id="kar-desc">Menos passos que o método tradicional da escola.</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 12px; color: var(--text-muted);">Tempo de Execução</div>
+          <div style="font-size: 20px; font-weight: 700; font-family: monospace;" id="kar-time">-- ms</div>
+          <div style="font-size: 11px; color: var(--amber);">Complexidade O(n^1.585)</div>
+        </div>
+      </div>
+
+      <!-- EXPLICAÇÃO DETALHADA DO ALGORITMO -->
+      <div class="how-it-works-box">
+        <div class="how-it-works-title">
+          <span>🔍 Como Karatsuba funciona? (Exemplo Prático com 1234 × 5678)</span>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-label badge-divide">1. DIVISÃO (Cortar os números no meio):</div>
+            <div>
+              Imagine que queremos multiplicar <strong>1234 × 5678</strong>. O algoritmo divide cada número em duas metades:
+              <br>• <strong>1234</strong> vira <strong>12</strong> (esquerda) e <strong>34</strong> (direita).
+              <br>• <strong>5678</strong> vira <strong>56</strong> (esquerda) e <strong>78</strong> (direita).
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-conquer">2. O JEITO TRADICIONAL DA ESCOLA (4 Multiplicações):</div>
+            <div>
+              O método comum que aprendemos na escola precisaria fazer <strong>4 multiplicações separadas</strong>:
+              <br><code>(12 × 56)</code>, <code>(12 × 78)</code>, <code>(34 × 56)</code> e <code>(34 × 78)</code>.
+              <br>Fazer 4 multiplicações a cada divisão deixa o computador muito lento quando os números têm centenas de dígitos (complexidade quadrática <strong>O(n²)</strong>).
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-label badge-combine">3. O TRUQUE DE KARATSUBA (Apenas 3 Multiplicações!):</div>
+            <div>
+              Karatsuba descobriu que não precisamos fazer 4 multiplicações, apenas <strong>3</strong>:
+              <br>• <strong>Multiplicação 1:</strong> multiplica as partes da esquerda → <code>12 × 56 = 672</code>
+              <br>• <strong>Multiplicação 2:</strong> multiplica as partes da direita → <code>34 × 78 = 2652</code>
+              <br>• <strong>Multiplicação 3:</strong> soma as partes e multiplica → <code>(12 + 34) × (56 + 78) = 46 × 134 = 6164</code>
+              <br><br>
+              <strong>O pulo do gato:</strong> Para achar o meio da conta, ele <strong>não multiplica de novo</strong>! Ele apenas faz subtrações simples usando os resultados anteriores:
+              <br><code>6164 - 672 - 2652 = 2840</code>.
+              <br><br>
+              Como subtrair é quase instantâneo para o computador, <strong>economizamos 1 multiplicação inteira</strong> em cada divisão! Em chaves de segurança bancária com mais de 100 dígitos, isso economiza <strong>milhões de operações</strong> (complexidade cai para <strong>O(n<sup>1.585</sup>)</strong>).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ==========================================
+// TROCA DE ABAS
+// ==========================================
+function showTab(n) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById("tab-btn-" + i).classList.remove("active");
+    document.getElementById("panel-" + i).classList.remove("active");
+  }
+  document.getElementById("tab-btn-" + n).classList.add("active");
+  document.getElementById("panel-" + n).classList.add("active");
+
+  if (n === 1) drawRadar();
+}
+
+// ==========================================
+// 1. RADAR (PAR MAIS PRÓXIMO)
+// ==========================================
+const radarCv = document.getElementById("radar-cv");
+const radarCtx = radarCv.getContext("2d");
+let drones = [];
+let closestPair = null;
+
+function generateDrones(count) {
+  drones = [];
+  closestPair = null;
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.sqrt(Math.random() * 0.9) * 90;
+    drones.push({
+      id: i + 1,
+      x: Math.round(dist * Math.cos(angle) * 10) / 10,
+      y: Math.round(dist * Math.sin(angle) * 10) / 10,
+    });
+  }
+  drawRadar();
+  runRadarScan();
+}
+
+function clearDrones() {
+  drones = [];
+  closestPair = null;
+  document.getElementById("radar-dist").textContent = "-- km";
+  document.getElementById("radar-time").textContent = "-- ms";
+  document.getElementById("radar-details").textContent = "Nenhum drone no radar. Clique no mapa ou gere aleatórios.";
+  document.getElementById("radar-result").className = "result-banner";
+  drawRadar();
+}
+
+function clickOnRadar(e) {
+  const rect = radarCv.getBoundingClientRect();
+  const px = e.clientX - rect.left;
+  const py = e.clientY - rect.top;
+  const scale = (radarCv.width / 2) / 100;
+  
+  const kmX = Math.round(((px - radarCv.width / 2) / scale) * 10) / 10;
+  const kmY = Math.round(((py - radarCv.height / 2) / scale) * 10) / 10;
+  
+  drones.push({
+    id: drones.length + 1,
+    x: kmX,
+    y: kmY,
+  });
+  drawRadar();
+  if (drones.length >= 2) runRadarScan();
+}
+
+async function runRadarScan() {
+  if (drones.length < 2) return;
+  try {
+    const res = await fetch("/api/radar/scan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ aircraft: drones.map(d => ({ ...d, callsign: "Drone #" + d.id })) })
+    });
+    const data = await res.json();
+    if (data.error) return;
+
+    closestPair = data;
+    document.getElementById("radar-dist").textContent = data.distance_km.toFixed(2) + " km";
+    document.getElementById("radar-time").textContent = data.ms.toFixed(3) + " ms";
+    
+    const banner = document.getElementById("radar-result");
+    if (data.distance_km < 8.0) {
+      banner.className = "result-banner alert";
+      document.getElementById("radar-dist").style.color = "var(--red)";
+      document.getElementById("radar-details").textContent = `⚠️ Risco de colisão! O ${data.ac1.callsign} e o ${data.ac2.callsign} estão muito próximos.`;
+    } else {
+      banner.className = "result-banner success";
+      document.getElementById("radar-dist").style.color = "var(--green)";
+      document.getElementById("radar-details").textContent = `✅ Seguro. O par mais próximo é ${data.ac1.callsign} e ${data.ac2.callsign}.`;
+    }
+    drawRadar();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function drawRadar() {
+  const w = radarCv.width;
+  const h = radarCv.height;
+  const cx = w / 2;
+  const cy = h / 2;
+  const scale = (w * 0.45) / 100;
+
+  radarCtx.clearRect(0, 0, w, h);
+
+  // Círculos concêntricos de radar
+  [25, 50, 75, 100].forEach(km => {
+    radarCtx.beginPath();
+    radarCtx.arc(cx, cy, km * scale, 0, Math.PI * 2);
+    radarCtx.strokeStyle = km === 100 ? "rgba(88, 166, 255, 0.4)" : "rgba(48, 54, 61, 0.6)";
+    radarCtx.lineWidth = 1;
+    radarCtx.stroke();
+    
+    radarCtx.fillStyle = "rgba(139, 148, 158, 0.6)";
+    radarCtx.font = "11px Inter";
+    radarCtx.fillText(km + " km", cx + 4, cy - km * scale + 14);
+  });
+
+  // Linhas dos eixos principais
+  radarCtx.strokeStyle = "rgba(48, 54, 61, 0.5)";
+  radarCtx.beginPath();
+  radarCtx.moveTo(cx, 0); radarCtx.lineTo(cx, h);
+  radarCtx.moveTo(0, cy); radarCtx.lineTo(w, cy);
+  radarCtx.stroke();
+
+  // DIDÁTICA: Desenha a Linha de Divisão e a Faixa Central 2d
+  if (closestPair && closestPair.mid_x !== undefined) {
+    const midPx = cx + closestPair.mid_x * scale;
+    const stripWidthPx = closestPair.strip_width * scale;
+
+    // Faixa sombreada de largura 2d
+    radarCtx.fillStyle = "rgba(88, 166, 255, 0.12)";
+    radarCtx.fillRect(midPx - stripWidthPx, 0, stripWidthPx * 2, h);
+
+    // Linhas de borda da faixa 2d
+    radarCtx.strokeStyle = "rgba(88, 166, 255, 0.3)";
+    radarCtx.lineWidth = 1;
+    radarCtx.beginPath();
+    radarCtx.moveTo(midPx - stripWidthPx, 0); radarCtx.lineTo(midPx - stripWidthPx, h);
+    radarCtx.moveTo(midPx + stripWidthPx, 0); radarCtx.lineTo(midPx + stripWidthPx, h);
+    radarCtx.stroke();
+
+    // Linha vertical do meio (Divisão)
+    radarCtx.strokeStyle = "rgba(255, 255, 255, 0.65)";
+    radarCtx.setLineDash([6, 6]);
+    radarCtx.lineWidth = 1.5;
+    radarCtx.beginPath();
+    radarCtx.moveTo(midPx, 0); radarCtx.lineTo(midPx, h);
+    radarCtx.stroke();
+    radarCtx.setLineDash([]);
+
+    // Rótulo da linha divisória
+    radarCtx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    radarCtx.font = "10px monospace";
+    radarCtx.fillText("Divisão Central", midPx + 5, 20);
+  }
+
+  // Desenha os drones
+  drones.forEach(d => {
+    const x = cx + d.x * scale;
+    const y = cy + d.y * scale;
+
+    radarCtx.beginPath();
+    radarCtx.arc(x, y, 4.5, 0, Math.PI * 2);
+    radarCtx.fillStyle = "#58a6ff";
+    radarCtx.fill();
+
+    radarCtx.fillStyle = "#8b949e";
+    radarCtx.font = "10px monospace";
+    radarCtx.fillText("#" + d.id, x + 6, y - 4);
+  });
+
+  // Linha conectando o par mais próximo
+  if (closestPair && closestPair.ac1 && closestPair.ac2) {
+    const p1x = cx + closestPair.ac1.x * scale;
+    const p1y = cy + closestPair.ac1.y * scale;
+    const p2x = cx + closestPair.ac2.x * scale;
+    const p2y = cy + closestPair.ac2.y * scale;
+
+    const color = closestPair.distance_km < 8.0 ? "#f85149" : "#3fb950";
+
+    radarCtx.save();
+    radarCtx.strokeStyle = color;
+    radarCtx.lineWidth = 3;
+    radarCtx.beginPath();
+    radarCtx.moveTo(p1x, p1y);
+    radarCtx.lineTo(p2x, p2y);
+    radarCtx.stroke();
+
+    [ [p1x, p1y], [p2x, p2y] ].forEach(([px, py]) => {
+      radarCtx.beginPath();
+      radarCtx.arc(px, py, 8, 0, Math.PI * 2);
+      radarCtx.strokeStyle = color;
+      radarCtx.lineWidth = 2;
+      radarCtx.stroke();
+    });
+    radarCtx.restore();
+  }
+}
+
+// ==========================================
+// 2. CONTAGEM DE INVERSÕES (RECOMENDADOR)
+// ==========================================
+const MOVIES = [
+  { id: "int", title: "Interestelar 🚀" },
+  { id: "bb",  title: "Breaking Bad 🧪" },
+  { id: "god", title: "O Poderoso Chefão 🌹" },
+  { id: "mtx", title: "Matrix 💊" },
+  { id: "par", title: "Parasita 🎭" },
+  { id: "opp", title: "Oppenheimer 💥" },
+];
+const CRITIC_ORDER = ["god", "par", "opp", "bb", "mtx", "int"];
+let userMovies = ["int", "bb", "god", "mtx", "par", "opp"];
+
+function renderMovies() {
+  const container = document.getElementById("movies-list");
+  container.innerHTML = "";
+  const map = {};
+  MOVIES.forEach(m => map[m.id] = m);
+
+  userMovies.forEach((id, idx) => {
+    const m = map[id];
+    const div = document.createElement("div");
+    div.className = "movie-item";
+    div.innerHTML = `
+      <div style="display: flex; align-items: center;">
+        <div class="movie-pos">${idx + 1}º</div>
+        <div style="font-weight: 600; font-size: 15px;">${m.title}</div>
+      </div>
+      <div>
+        <button class="arrow-btn" onclick="moveMovie(${idx}, -1)" ${idx === 0 ? "disabled" : ""}>▲</button>
+        <button class="arrow-btn" onclick="moveMovie(${idx}, 1)" ${idx === userMovies.length - 1 ? "disabled" : ""}>▼</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function moveMovie(idx, dir) {
+  const target = idx + dir;
+  if (target < 0 || target >= userMovies.length) return;
+  const temp = userMovies[idx];
+  userMovies[idx] = userMovies[target];
+  userMovies[target] = temp;
+  renderMovies();
+  calcMovieAffinity();
+}
+
+function presetMovies(type) {
+  if (type === "sync") userMovies = [...CRITIC_ORDER];
+  if (type === "invert") userMovies = [...CRITIC_ORDER].reverse();
+  renderMovies();
+  calcMovieAffinity();
+}
+
+async function calcMovieAffinity() {
+  try {
+    const res = await fetch("/api/match/affinity", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_order: userMovies, ref_order: CRITIC_ORDER })
+    });
+    const d = await res.json();
+    if (d.error) return;
+
+    document.getElementById("match-pct").textContent = d.affinity_pct + "%";
+    document.getElementById("match-pct").style.color = d.color;
+    document.getElementById("match-verdict").textContent = d.verdict;
+    document.getElementById("match-bar").style.width = d.affinity_pct + "%";
+    document.getElementById("match-bar").style.background = d.color;
+    document.getElementById("match-inv").textContent = d.inversions;
+
+    // Lista conflitos
+    const confBox = document.getElementById("conflicts-container");
+    const confList = document.getElementById("conflicts-list");
+    if (d.conflicts_sample && d.conflicts_sample.length > 0) {
+      confBox.style.display = "block";
+      const map = {};
+      MOVIES.forEach(m => map[m.id] = m.title);
+      confList.innerHTML = d.conflicts_sample.map(c => 
+        `• Você colocou <strong>${map[c.itemA]}</strong> antes de <strong>${map[c.itemB]}</strong> (o crítico discorda)`
+      ).join("<br>");
+    } else {
+      confBox.style.display = "none";
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// ==========================================
+// 3. MEDIANA DAS MEDIANAS (SLA FINTECH)
+// ==========================================
+const histCv = document.getElementById("hist-cv");
+const histCtx = histCv.getContext("2d");
+
+async function simulateLatency(isAttack) {
+  try {
+    const res = await fetch("/api/fintech/simulate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        count: 300,
+        spike_pct: isAttack ? 25.0 : 2.0,
+        base_latency: 35.0,
+        spike_magnitude: 1400.0,
+      })
+    });
+    const d = await res.json();
+    if (d.error) return;
+
+    document.getElementById("sla-median").textContent = d.median + " ms";
+    document.getElementById("sla-mean").textContent = d.mean + " ms";
+    
+    if (isAttack) {
+      document.getElementById("sla-skew").textContent = `Distorção: +${d.skew_impact} ms puxados por poucos timeouts!`;
+    } else {
+      document.getElementById("sla-skew").textContent = `Tráfego estável, média e mediana alinhadas.`;
+    }
+
+    drawHistogram(d);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function drawHistogram(d) {
+  const w = histCv.width = histCv.clientWidth * 2;
+  const h = histCv.height = histCv.clientHeight * 2;
+  histCtx.clearRect(0, 0, w, h);
+
+  const bins = d.bins;
+  const maxCount = Math.max(...bins.map(b => b.count), 1);
+  const barW = (w - 40) / bins.length;
+  const baseY = h - 25;
+
+  bins.forEach((b, i) => {
+    const barH = (b.count / maxCount) * (baseY - 30);
+    const x = 20 + i * barW;
+    const y = baseY - barH;
+    histCtx.fillStyle = "rgba(88, 166, 255, 0.7)";
+    histCtx.fillRect(x + 1, y, barW - 2, barH);
+  });
+
+  const minV = bins[0].min;
+  const maxV = bins[bins.length - 1].max;
+  const range = maxV - minV || 1;
+  const getX = val => 20 + Math.max(0, Math.min(1, (val - minV) / range)) * (w - 40);
+
+  // Linha da Mediana (Azul)
+  const medX = getX(d.median);
+  histCtx.strokeStyle = "#58a6ff";
+  histCtx.lineWidth = 4;
+  histCtx.beginPath();
+  histCtx.moveTo(medX, 10); histCtx.lineTo(medX, baseY);
+  histCtx.stroke();
+
+  // Linha da Média (Vermelho)
+  const meanX = getX(d.mean);
+  histCtx.strokeStyle = "#f85149";
+  histCtx.lineWidth = 4;
+  histCtx.beginPath();
+  histCtx.moveTo(meanX, 25); histCtx.lineTo(meanX, baseY);
+  histCtx.stroke();
+}
+
+// ==========================================
+// 4. KARATSUBA (CRIPTOGRAFIA)
+// ==========================================
+async function generateAndMultiply(digits) {
+  try {
+    const resKeys = await fetch("/api/crypto/generate_keys", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ digits })
+    });
+    const keys = await resKeys.json();
+    document.getElementById("kar-x").value = keys.key_x;
+    document.getElementById("kar-y").value = keys.key_y;
+
+    const resCalc = await fetch("/api/crypto/benchmark_sign", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key_x: keys.key_x, key_y: keys.key_y, payload: "CHAVE SEGURA" })
+    });
+    const data = await resCalc.json();
+    if (data.error) return;
+
+    document.getElementById("kar-savings").textContent = data.savings_pct + "%";
+    document.getElementById("kar-time").textContent = data.ms.toFixed(3) + " ms";
+    document.getElementById("kar-desc").textContent = `Em números de ${digits} dígitos, Karatsuba fez apenas ${data.ops_karatsuba.toLocaleString()} passos contra ${data.ops_school.toLocaleString()} do método tradicional.`;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// ==========================================
+// INICIALIZAÇÃO
+// ==========================================
+window.addEventListener("DOMContentLoaded", () => {
+  generateDrones(20);
+  renderMovies();
+  calcMovieAffinity();
+  simulateLatency(false);
+  generateAndMultiply(64);
+});
+</script>
+</body>
+</html>

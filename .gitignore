@@ -1,0 +1,19 @@
+# Ambientes virtuais
+venv/
+.venv/
+env/
+*/venv/
+*/.venv/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+*/__pycache__/
+
+# Configurações de IDE e IA locais
+.claude/
+.vscode/
+.idea/
+*.swp
+*.swo
