@@ -70,6 +70,27 @@ python3 app.py
 Após iniciar, abra no navegador:  
 👉 **[http://localhost:5000](http://localhost:5000)**
 
+> **Dica de Navegação:** Use as teclas numéricas `1`, `2`, `3` ou `4` no teclado para alternar instantaneamente entre os 4 módulos interativos!
+
+---
+
+## 🧪 Testes Automatizados
+
+O projeto inclui uma suíte completa de testes unitários e de integração utilizando o módulo nativo `unittest` do Python (sem dependências externas):
+
+```bash
+# A partir da pasta do projeto
+cd trabalho3
+
+# Executa todos os testes unitários e de integração
+python3 -m unittest discover tests -v
+```
+
+A suíte cobre:
+- **Corretude dos 4 Algoritmos:** validação contra métodos de força bruta $O(n^2)$ e funções de referência.
+- **Casos de Borda:** listas vazias, listas unitárias, elementos duplicados, valores negativos e inteiros com centenas de dígitos.
+- **Validação de Contratos da API:** verificação de status code 200/400 e integridade das respostas JSON.
+
 ---
 
 ## 🎨 Tecnologias Utilizadas
