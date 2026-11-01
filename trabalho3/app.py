@@ -53,7 +53,10 @@ def favicon():
 
 @app.route("/api/inversions", methods=["POST"])
 def inversions():
-    data = parse_ints(request.json["data"])
+    payload = request.get_json(silent=True) or {}
+    if "data" not in payload:
+        return jsonify({"error": "Parâmetro 'data' obrigatório"}), 400
+    data = parse_ints(payload["data"])
     arr = list(data)
     result, ms = timed(count_inversions, arr)
     return jsonify({"result": result, "sorted": sorted(data), "ms": ms, "n": len(data)})
@@ -61,8 +64,14 @@ def inversions():
 
 @app.route("/api/karatsuba", methods=["POST"])
 def karatsuba_route():
-    x = int(request.json["x"])
-    y = int(request.json["y"])
+    payload = request.get_json(silent=True) or {}
+    if "x" not in payload or "y" not in payload:
+        return jsonify({"error": "Parâmetros 'x' e 'y' obrigatórios"}), 400
+    try:
+        x = int(payload["x"])
+        y = int(payload["y"])
+    except ValueError:
+        return jsonify({"error": "Valores devem ser inteiros válidos"}), 400
     result, ms = timed(karatsuba, x, y)
     correct = result == x * y
     return jsonify({"result": str(result), "correct": correct, "digits": len(str(abs(result))), "ms": ms})
@@ -70,12 +79,20 @@ def karatsuba_route():
 
 @app.route("/api/median", methods=["POST"])
 def median():
-    data = parse_ints(request.json["data"])
-    k = request.json.get("k")
+    payload = request.get_json(silent=True) or {}
+    if "data" not in payload:
+        return jsonify({"error": "Parâmetro 'data' obrigatório"}), 400
+    data = parse_ints(payload["data"])
+    if not data:
+        return jsonify({"error": "Lista de números não pode ser vazia"}), 400
+    k = payload.get("k")
     if k is None or k == "":
         k = len(data) // 2
     else:
-        k = int(k)
+        try:
+            k = int(k)
+        except ValueError:
+            return jsonify({"error": "Parâmetro 'k' deve ser inteiro"}), 400
     k = max(0, min(k, len(data) - 1))
     result, ms = timed(median_of_medians, list(data), k)
     correct = result == sorted(data)[k]
@@ -84,7 +101,10 @@ def median():
 
 @app.route("/api/closest", methods=["POST"])
 def closest():
-    pts = parse_points(request.json["data"])
+    payload = request.get_json(silent=True) or {}
+    if "data" not in payload:
+        return jsonify({"error": "Parâmetro 'data' obrigatório"}), 400
+    pts = parse_points(payload["data"])
     if len(pts) < 2:
         return jsonify({"error": "Necessário pelo menos 2 pontos"}), 400
     (d, p1, p2), ms = timed(closest_pair, pts)
@@ -106,7 +126,8 @@ def closest():
 
 @app.route("/api/random", methods=["POST"])
 def random_data():
-    kind = request.json["kind"]
+    payload = request.get_json(silent=True) or {}
+    kind = payload.get("kind")
     if kind == "inversions":
         data = [random.randint(0, 999) for _ in range(50)]
         return jsonify({"data": ", ".join(map(str, data))})
@@ -160,11 +181,15 @@ def radar_generate():
 @app.route("/api/radar/scan", methods=["POST"])
 def radar_scan():
     """Executa detecção de par mais próximo no radar em O(n log n)."""
-    aircraft = request.json.get("aircraft", [])
+    payload = request.get_json(silent=True) or {}
+    aircraft = payload.get("aircraft", [])
     if len(aircraft) < 2:
         return jsonify({"error": "Necessário no mínimo 2 aeronaves no espaço aéreo"}), 400
 
-    pts = [(float(a["x"]), float(a["y"])) for a in aircraft]
+    try:
+        pts = [(float(a["x"]), float(a["y"])) for a in aircraft]
+    except (KeyError, ValueError, TypeError):
+        return jsonify({"error": "Formato de coordenadas de aeronave inválido"}), 400
 
     (d, p1, p2), ms = timed(closest_pair, pts)
 
@@ -189,8 +214,11 @@ def radar_scan():
         alert = "SAFE"
         alert_desc = "✅ TRÁFEGO SEGURO"
 
-    # Comparativo com força bruta n*(n-1)/2
+    # Comparativo com força bruta n*(n-1)/2 vs D&C n*log2(n)
     n = len(aircraft)
+    brute_comparisons = n * (n - 1) // 2
+    d_and_c_approx = int(n * math.log2(max(2, n)))
+
     # Ponto de corte da Divisão e Conquista
     pts_sorted_x = sorted(pts, key=lambda p: p[0])
     mid_x = pts_sorted_x[len(pts_sorted_x) // 2][0]
@@ -271,8 +299,9 @@ def match_catalogs():
 @app.route("/api/match/affinity", methods=["POST"])
 def match_affinity():
     """Calcula afinidade entre dois rankings usando Contagem de Inversões O(n log n)."""
-    user_order = request.json.get("user_order", [])
-    ref_order = request.json.get("ref_order", [])
+    payload = request.get_json(silent=True) or {}
+    user_order = payload.get("user_order", [])
+    ref_order = payload.get("ref_order", [])
 
     if len(user_order) != len(ref_order) or len(user_order) < 2:
         return jsonify({"error": "Listas de tamanhos incompatíveis ou insuficientes"}), 400
@@ -341,11 +370,16 @@ def match_affinity():
 @app.route("/api/fintech/simulate", methods=["POST"])
 def fintech_simulate():
     """Gera telemetria de latência de transações PIX/Cartão e calcula percentis robustos em O(n)."""
-    n = int(request.json.get("count", 400))
+    payload = request.get_json(silent=True) or {}
+    try:
+        n = int(payload.get("count", 400))
+        base_latency = float(payload.get("base_latency", 42.0))  # ms
+        spike_pct = float(payload.get("spike_pct", 10.0))  # % de outliers provocados por ataques
+        spike_magnitude = float(payload.get("spike_magnitude", 1500.0))  # ms do pico
+    except (ValueError, TypeError):
+        return jsonify({"error": "Parâmetros numéricos inválidos"}), 400
+
     n = max(20, min(n, 5000))
-    base_latency = float(request.json.get("base_latency", 42.0))  # ms
-    spike_pct = float(request.json.get("spike_pct", 10.0))  # % de outliers provocados por ataques
-    spike_magnitude = float(request.json.get("spike_magnitude", 1500.0))  # ms do pico
 
     latencies = []
     spike_count = int(n * (spike_pct / 100.0))
@@ -415,7 +449,11 @@ def fintech_simulate():
 @app.route("/api/crypto/generate_keys", methods=["POST"])
 def crypto_generate_keys():
     """Gera números com alta quantidade de dígitos para simular chaves de alta entropia."""
-    digits = int(request.json.get("digits", 64))
+    payload = request.get_json(silent=True) or {}
+    try:
+        digits = int(payload.get("digits", 64))
+    except (ValueError, TypeError):
+        digits = 64
     digits = max(16, min(digits, 1024))
 
     # Gera inteiros gigantes com os primeiros dígitos diferentes de zero
@@ -428,15 +466,19 @@ def crypto_generate_keys():
 @app.route("/api/crypto/benchmark_sign", methods=["POST"])
 def crypto_benchmark_sign():
     """Executa Karatsuba em O(n^1.585) e assina digitalmente um payload bancário."""
-    x_str = request.json.get("key_x", "").strip()
-    y_str = request.json.get("key_y", "").strip()
-    payload = request.json.get("payload", "TRANSFERÊNCIA PIX R$ 150.000,00 - CLIENTE #8921 -> FORNECEDOR #4412")
+    payload_data = request.get_json(silent=True) or {}
+    x_str = str(payload_data.get("key_x", "")).strip()
+    y_str = str(payload_data.get("key_y", "")).strip()
+    payload = str(payload_data.get("payload", "TRANSFERÊNCIA PIX R$ 150.000,00 - CLIENTE #8921 -> FORNECEDOR #4412"))
 
     if not x_str or not y_str:
         return jsonify({"error": "Chaves não fornecidas"}), 400
 
-    x = int(x_str)
-    y = int(y_str)
+    try:
+        x = int(x_str)
+        y = int(y_str)
+    except ValueError:
+        return jsonify({"error": "As chaves devem conter apenas dígitos válidos"}), 400
     n = max(len(x_str), len(y_str))
 
     # Executa algoritmo de Karatsuba
