@@ -13,6 +13,7 @@ class TestOmniDivideAPI(unittest.TestCase):
     def test_index_route(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b"OmniDivide", response.data)
         self.assertIn(b"Divis", response.data)
 
     def test_inversions_api_success(self):
