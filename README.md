@@ -34,7 +34,7 @@ Sistema interativo que aplica **4 Algoritmos Clássicos de Divisão e Conquista*
 
 O vídeo de apresentação e demonstração do projeto pode ser assistido no YouTube:
 
-👉 [Assistir à Apresentação do Projeto](https://youtu.be/SEU_LINK_DO_VIDEO_AQUI)
+👉 [Assistir à Apresentação do Projeto](https://youtu.be/eSRc9ukxMwo)
 
 > *(Espaço reservado para o link do vídeo de apresentação da dupla)*
 
